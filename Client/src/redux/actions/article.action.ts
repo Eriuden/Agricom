@@ -21,21 +21,18 @@ type articlesProps = {
     articleId: string,
     picture: string,
     name: string,
-    typeArticle: string,
-    degradationState: string,
+    productType: string,
     price: string
-    likers:[string],
-    dislikers:[string],
 }
 
 export const getAllArticles = (num:number, dispatch:any) => {
         return axios 
             .get(`${process.env.REACT_APP_API_URL}api/article`)
-            .then((res)=> {
+            .then((res:any)=> {
                 dispatch ({type: GET_ARTICLE, payload: num})
                 dispatch({type:GET_ALL_ARTICLES, payload: res.data})
             })
-            .catch((err) => window.alert(err))
+            .catch((err:any) => window.alert(err))
 }
 
 export const getArticle = (articleId: string, dispatch:any) => {
@@ -44,13 +41,13 @@ export const getArticle = (articleId: string, dispatch:any) => {
             .then(()=> {
                 dispatch({type:GET_ARTICLE, payload:articleId})
             })
-            .catch((err)=> window.alert(err))
+            .catch((err:any)=> window.alert(err))
 }
 
 export const addArticle = (data: any, dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/article`, data)
-            .then((res)=> {
+            .then((res:any)=> {
                 if (res.data.errors) {
                     dispatch({type: GET_ARTICLE_ERROR, payload: res.data.errors})
                 } else {
@@ -62,137 +59,58 @@ export const addArticle = (data: any, dispatch:any) => {
 export const updateArticle = ({
     articleId,
     name,
-    typeArticle,
-    degradationState,
+    productType,
     price
 } : articlesProps , dispatch:any
 ) => {
         return axios({
             method:"put",
             url:`${process.env.REACT_APP_API_URL}api/article/${articleId}`,
-            data: { name, typeArticle, degradationState, price},
+            data: { name, productType price},
         })
         .then(()=> {
             dispatch({
                 type: UPDATE_ARTICLE,
-                payload: {articleId, name, typeArticle, degradationState, price}
+                payload: {articleId, name, productType, price}
             })
         })
-        .catch((err)=> window.alert(err))
+        .catch((err:any)=> window.alert(err))
 }
 
 export const uploadPicture = (data: any, articleId: string , dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/article/upload-articlePic`, data)
-            .then((res)=> {
+            .then((res:any)=> {
                 if (res.data.errors) {
                     dispatch({type: GET_ARTICLE_ERROR, payload: res.data.errors})
                 } else {
                     dispatch ({ type: GET_ARTICLE_ERROR, payload: ""})
                     return axios
                     .get(`${process.env.REACT_APP_API_URL}api/article/${articleId}`)
-                    .then((res)=> {
+                    .then((res:any)=> {
                         dispatch({ type: UPLOAD_ARTICLE_PICTURE, payload: res.data.picture})
                     })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err:any) => console.log(err))
 }
 
 export const deleteArticle = ({
-    articleId, picture, name, typeArticle, degradationState, price
+    articleId, picture, name, productType, price
 } : articlesProps, dispatch:any) => {
         return axios ({
             method:"delete",
             url:`${process.env.REACT_APP_API_URL}api/article/${articleId}`,
-            data: {picture, name, typeArticle, degradationState, price}
+            data: {picture, name, productType, price}
         })
         .then(()=> {
             dispatch({type: DELETE_ARTICLE, payload: {articleId}})
         })
 }
 
-export const likeArticle = (articleId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/like-article`+ articleId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: LIKE_ARTICLE, payload: {articleId, userId}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const unlikeArticle = (articleId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/unlike-article`+ articleId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: UNLIKE_ARTICLE, payload: {articleId, userId}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const dislikeArticle = (articleId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/dislike-article`+ articleId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: DISLIKE_ARTICLE, payload: {articleId, userId}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const undislikeArticle = (articleId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/undislike-article`+ articleId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: UNDISLIKE_ARTICLE, payload: {articleId, userId}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const addCommentArticle = (articleId: string, commentId: string, commenterId: string, text: string, commenterName: string
-    ,dispatch:any) => {
-        return axios({
-            method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/comment-article/${articleId}`,
-            data: {commentId, commenterId, text, commenterName}
-        })
-        .then(()=> {
-            dispatch({ type: ADD_COMMENT, payload: {articleId}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const editCommentArticle = (articleId: string, commentId: string, text: string, dispatch:any) => {
-        return axios({
-            method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/edit-comment-article/${articleId}`,
-            data: { commentId, text}
-        })
-        .then(()=> {
-            dispatch({ type: EDIT_COMMENT, payload: {articleId, commentId, text}})
-        })
-        .catch((err)=> window.alert(err))
-}
 
-export const deleteCommentArticle = (articleId:string, commentId:string, dispatch:any) => {
-        return axios({
-            method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/delete-comment-article/${articleId}`,
-            data:{commentId},
-        })
-        .then(()=> {
-            dispatch({ type: DELETE_COMMENT, payload: {articleId, commentId}})
-        })
-        .catch((err)=> window.alert(err))
-}
