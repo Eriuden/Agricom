@@ -36,9 +36,9 @@ export const Home = () => {
               users.map((user:any) => {
                 articles.map((article:any) => {
                 return <ArticleCard articleProps={article} userProps={user} key={article._id}/>
-            })
+                })
               })
-              }
+            }
           </ul>
         </div>
       </div>
