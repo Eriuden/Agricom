@@ -9,6 +9,7 @@ export const Home = () => {
     const [count, setCount] = useState(0)
     const dispatch = useDispatch()
     const articles = useSelector((state:any)=> state.allArticleReducer)
+    const users = useSelector((state:any) => state.allUsersReducer)
   
     const loadMore = () => {
       if (window.innerHeight + document.documentElement.scrollTop + 1 >
@@ -31,10 +32,13 @@ export const Home = () => {
       <div>
         <div>
           <ul>
-            {!isEmpty(articles[0]) &&
-              articles.map((article:any) => {
-                return <ArticleCard articleProps={article} key={article._id}/>
-            })}
+            {!isEmpty(articles[0]) &&!isEmpty(users[0]) &&
+              users.map((user:any) => {
+                articles.map((article:any) => {
+                return <ArticleCard articleProps={article} userProps={user} key={article._id}/>
+            })
+              })
+              }
           </ul>
         </div>
       </div>
