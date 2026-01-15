@@ -50,7 +50,7 @@ export const uploadPicture = (data: any, id: string, dispatch:any) => {
                     })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err:any) => console.log(err))
 }
 
 export const updatePassword = (userId: string, password: string, dispatch:any) => {
