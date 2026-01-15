@@ -66,7 +66,7 @@ export const updateArticle = ({
         return axios({
             method:"put",
             url:`${process.env.REACT_APP_API_URL}api/article/${articleId}`,
-            data: { name, productType price},
+            data: { name, productType, price},
         })
         .then(()=> {
             dispatch({

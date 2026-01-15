@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../redux/actions/user.actions";
+import { updateUser } from "../redux/actions/user.action"
 import UpdatePassword from "./UpdatePassword";
 
 export const UserProfile = (userProps:any) => {
 
     const userData = useSelector((state: any) => state.userReducer)
     const dispatch = useDispatch
-
     const [name, setName] = useState(userData.name)
     const [address, setAddress] = useState(userData.adress)
     const [updateForm, setUpdateForm] = useState(false)
@@ -16,9 +15,11 @@ export const UserProfile = (userProps:any) => {
       updateUser(userProps, dispatch)
       setUpdateForm(false)
     }
+    
     return (
       <div>
         <h1>Profil de {userData.name}</h1>
+        <h3>Vous êtes un {userData.typeOfUser}</h3>
         <h3>{userData.address}</h3>
   
         {updateForm === false && (
@@ -32,8 +33,7 @@ export const UserProfile = (userProps:any) => {
             <input type="text" defaultValue={name} onChange={(e)=> setName
             (e.target.value)}/>
             <textarea defaultValue={address} onChange={(e)=>
-            setAddress(e.target.value)}/>
-  
+            setAddress(e.target.value)}/> 
             <button onClick={handleUpdate}>Valider les modifications</button>
           </>
         )}
