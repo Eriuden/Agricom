@@ -25,7 +25,7 @@ type articlesProps = {
     price: string
 }
 
-export const getAllArticles = (num:number, dispatch:any) => {
+export const getAllArticles = async (num:number, dispatch:any) => {
         return axios 
             .get(`${process.env.REACT_APP_API_URL}api/article`)
             .then((res:any)=> {
@@ -35,7 +35,7 @@ export const getAllArticles = (num:number, dispatch:any) => {
             .catch((err:any) => window.alert(err))
 }
 
-export const getArticle = (articleId: string, dispatch:any) => {
+export const getArticle = async (articleId: string, dispatch:any) => {
         return axios
             .get(`${process.env.REACT_APP_API_URL}api/article/:id`)
             .then(()=> {
@@ -44,7 +44,7 @@ export const getArticle = (articleId: string, dispatch:any) => {
             .catch((err:any)=> window.alert(err))
 }
 
-export const addArticle = (data: any, dispatch:any) => {
+export const addArticle = async (data: any, dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/article`, data)
             .then((res:any)=> {
@@ -56,7 +56,7 @@ export const addArticle = (data: any, dispatch:any) => {
             })
 }
 
-export const updateArticle = ({
+export const updateArticle = async ({
     articleId,
     name,
     productType,
@@ -77,7 +77,7 @@ export const updateArticle = ({
         .catch((err:any)=> window.alert(err))
 }
 
-export const uploadPicture = (data: any, articleId: string , dispatch:any) => {
+export const uploadPicture = async (data: any, articleId: string , dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/article/upload-articlePic`, data)
             .then((res:any)=> {
@@ -95,7 +95,7 @@ export const uploadPicture = (data: any, articleId: string , dispatch:any) => {
             .catch((err:any) => console.log(err))
 }
 
-export const deleteArticle = ({
+export const deleteArticle = async ({
     articleId, picture, name, productType, price
 } : articlesProps, dispatch:any) => {
         return axios ({
