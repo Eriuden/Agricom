@@ -15,7 +15,7 @@ type userProps ={
     password: string
 }
 
-export const getUser = (uid: string, dispatch:any) => {
+export const getUser = async (uid: string, dispatch:any) => {
         return axios 
             .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
             .then((res:any) => {
@@ -24,7 +24,7 @@ export const getUser = (uid: string, dispatch:any) => {
             .catch((err:any) => window.alert(err))
 }
 
-export const updateUser = ({userId, name, adress, email} : userProps, dispatch: any) => {   
+export const updateUser =  async ({userId, name, adress, email} : userProps, dispatch: any) => {   
         return axios({
             method:"put",
             url:`${process.env.REACT_APP_API_URL}api/user` + userId,
@@ -35,7 +35,7 @@ export const updateUser = ({userId, name, adress, email} : userProps, dispatch: 
         })
 }
 
-export const uploadPicture = (data: any, id: string, dispatch:any) => {
+export const uploadPicture = async (data: any, id: string, dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/user/upload-userPic`, data)
             .then((res:any)=> {
@@ -53,7 +53,7 @@ export const uploadPicture = (data: any, id: string, dispatch:any) => {
             .catch((err:any) => console.log(err))
 }
 
-export const updatePassword = (userId: string, password: string, dispatch:any) => {
+export const updatePassword = async (userId: string, password: string, dispatch:any) => {
         return axios({
             method:"put",
             url: `${process.env.REACT_APP_API_URL}api/user` + userId,
@@ -65,7 +65,7 @@ export const updatePassword = (userId: string, password: string, dispatch:any) =
         .catch((err:any)=> window.alert(err))
 }
 
-export const deleteUser = ({userId, name, email, adress, password} : userProps, dispatch:any) => {
+export const deleteUser = async ({userId, name, email, adress, password} : userProps, dispatch:any) => {
         return axios({
             method:"delete",
             url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
