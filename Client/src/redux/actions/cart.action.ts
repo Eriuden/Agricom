@@ -11,7 +11,7 @@ type cartProps = {
     quantity: number,
     quantityAdded: number
 }
-export const addToCart = ({cart, newProduct, quantityAdded} : cartProps, dispatch:any) => {
+export const addToCart = async ({cart, newProduct, quantityAdded} : cartProps, dispatch:any) => {
         let same = cart.findIndex((cartIndexFound: any) => cartIndexFound.id === newProduct.id)
         if (same === -1) {
             newProduct.quantity = quantityAdded
@@ -28,7 +28,7 @@ export const addToCart = ({cart, newProduct, quantityAdded} : cartProps, dispatc
         })
 }
 
-export const deleteFromCart = ({cart, product} : cartProps, dispatch:any) => {
+export const deleteFromCart = async ({cart, product} : cartProps, dispatch:any) => {
         let newCart = cart.filter((filteredCart: any) => filteredCart.id !== product.id)
         dispatch({
             type: MODIFY_CART,
@@ -36,7 +36,7 @@ export const deleteFromCart = ({cart, product} : cartProps, dispatch:any) => {
         })
 }
 
-export const cleanCart = (dispatch:any) => {
+export const cleanCart = async (dispatch:any) => {
         dispatch({
             type: CLEAN_CART,
             payload: null
